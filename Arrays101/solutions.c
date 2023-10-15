@@ -195,3 +195,24 @@ int removeDuplicates(int* nums, int numsSize){
     }
     return numsSize - dupesFound;
 }
+
+/**
+ * Sort Array By Parity
+*/
+int* sortArrayByParity(int* nums, int numsSize, int* returnSize){
+    *returnSize = numsSize;
+    int nextEven = 0;
+    int temp;
+    for(int i = 0; i < numsSize; i++) {
+        if(nums[i] % 2 == 1) {
+            nextEven = i;
+            while(nums[nextEven] % 2 == 1 && nextEven < numsSize - 1) {
+                nextEven++;
+            }
+            temp = nums[nextEven];
+            nums[nextEven] = nums[i];
+            nums[i] = temp;
+        }
+    }
+    return nums;
+}
