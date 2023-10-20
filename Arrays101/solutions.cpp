@@ -179,5 +179,31 @@ public:
         
     }
 
+/**
+ * Find All Numbers Disappeared in an Array
+*/
+public:
+    vector<int> findDisappearedNumbers(vector<int>& nums) {
+        using namespace std; 
+        vector<int> result;
+
+        // Placing every int num on index num-1 if possible.
+        for(auto& num : nums) {
+            // While num is not in the correct position
+            while(num != nums[num-1]) {
+                // Switch so that that num is in the correct position
+                swap(num, nums[num-1]);
+            }
+        }
+
+        // Counting all of the missing numbers:
+        for(int i = 0; i < nums.size(); i++) {
+            if(nums[i] != i+1) {
+                result.push_back(i+1);
+            }
+        }
+
+        return result;
+    }
 
 };
