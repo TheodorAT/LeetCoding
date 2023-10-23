@@ -21,10 +21,9 @@ public:
     }
 
 
-/**
- * Valid Mountain Array
-*/
-public:
+    /**
+     * Valid Mountain Array
+    */
     bool validMountainArray(vector<int>& arr) {
         using namespace std;
         if (arr.size() < 3) {
@@ -55,10 +54,9 @@ public:
     }
 
 
-/**
- * Replace Elements with Greatest Element on Right Side
-*/
-public:
+    /**
+     * Replace Elements with Greatest Element on Right Side
+    */
     vector<int> replaceElements(vector<int>& arr) {
         using namespace std;
         int largestSeen = arr[arr.size()-1];
@@ -74,10 +72,9 @@ public:
         return arr;
     }
 
-/**
- * Remove Duplicates from Sorted Array
-*/
-public:
+    /**
+     * Remove Duplicates from Sorted Array
+    */
     int removeDuplicates(vector<int>& nums) {
         using namespace std;
         int nextIdx = 0;
@@ -99,10 +96,9 @@ public:
     }
 
 
-/**
- * Move Zeroes
-*/
-public:
+    /**
+     * Move Zeroes
+    */
     void moveZeroes(vector<int>& nums) {
         using namespace std;
         int zeroPointer = 0; 
@@ -120,10 +116,9 @@ public:
         
     }
 
-/**
- * Height Checker
-*/
-public:
+    /**
+     * Height Checker
+    */
     int heightChecker(vector<int>& heights) {
         using namespace std;
         
@@ -140,10 +135,9 @@ public:
     }
 
 
-/**
- * Third Maximum Number
-*/
-public:
+    /**
+     * Third Maximum Number
+    */
     int thirdMax(vector<int>& nums) {
         using namespace std;
         
@@ -179,10 +173,9 @@ public:
         
     }
 
-/**
- * Find All Numbers Disappeared in an Array
-*/
-public:
+    /**
+     * Find All Numbers Disappeared in an Array
+    */
     vector<int> findDisappearedNumbers(vector<int>& nums) {
         using namespace std; 
         vector<int> result;
