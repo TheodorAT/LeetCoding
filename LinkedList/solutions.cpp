@@ -133,7 +133,154 @@ public:
 /**
  * Design a doubly linked list
  */
-class // TODO
+class MyDoublyLinkedList {
+    
+private: 
+    struct ListNode {
+        int val;
+        ListNode* next;
+        ListNode* prev;
+        
+        ListNode() {
+            this->val = 0;
+            this->next = nullptr;
+            this->prev = nullptr;
+        }
+        
+        ListNode(int val) {
+            this->val = val;
+            this->next = nullptr;
+            this->prev = nullptr;
+        }
+    };
+    
+    ListNode* head;
+    ListNode* tail;
+    int size;
+        
+public:    
+    MyDoublyLinkedList() {
+        head = nullptr;
+        tail = nullptr;
+        size = 0;
+    }
+    
+    // Get the value of the node at the given index in the linked list. If the index is invalid, return -1.
+    int get(int index) {
+        if(index >= size || index < 0) {
+            return -1;
+        }
+        ListNode* nodeAtIndex = getNodeAtIndex(index);
+        return nodeAtIndex->val;
+    }
+    
+    void addAtHead(int val) {
+        ListNode* newNode = new ListNode(val);
+        if(size == 0) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            newNode -> next = head;
+            head -> prev = newNode;
+            head = newNode;
+        }
+        size++;
+    }
+    
+    void addAtTail(int val) {
+        if(size==0) {
+            addAtHead(val);
+        } else {
+            ListNode* newNode = new ListNode(val);
+            newNode -> prev = tail;
+            tail -> next = newNode;
+            tail = newNode;
+            size++;
+        }
+    }
+    
+    void addAtIndex(int index, int val) {
+        // Check for out of bounds:
+        if(index > size || index < 0) {
+            return;
+        } 
+        // Check for edge cases: 
+        if (index == 0) {
+            addAtHead(val);
+            return;
+        } 
+        if (index == size) {
+            addAtTail(val);
+            return;
+        } 
+        
+        ListNode* newNode = new ListNode(val);
+        
+        ListNode* current = getNodeAtIndex(index);
+        ListNode* prevNode = current->prev;
+
+        newNode->next = current;
+        newNode->prev = prevNode;
+        
+        current->prev = newNode;
+        prevNode->next = newNode;
+        size++;        
+    }
+    
+    void deleteAtIndex(int index) {
+        // Check for out of bounds:
+        if(index >= size || index < 0) {
+            return;
+        } 
+        
+        ListNode* current = getNodeAtIndex(index);
+        ListNode* prevNode = current -> prev;
+        ListNode* nextNode = current -> next;
+        if (prevNode == NULL) {
+            head = nextNode;
+        } else {
+            prevNode->next = nextNode;
+        }
+        if(nextNode == NULL) {
+            tail = prevNode;
+        } else {
+            nextNode->prev = prevNode;
+        }
+        delete current;
+        size--;
+    }
+    
+    // Destructor
+    ~MyLinkedList() {
+        ListNode *p = head;
+        // Delete node at head while head is not null
+        while (head != nullptr)
+        {
+            head= head->next;
+            delete p;
+            p=head;
+        }
+    }
+    
+private:
+    ListNode* getNodeAtIndex(int index){
+        ListNode* current;
+        if(index < size/2) {
+            current = head;
+            for(int i = 0; i < index; i++) {
+                current = current->next;
+            }
+            return current;
+        } else {
+            current = tail;
+            for(int i = size-1; i > index; i--) {
+                current = current->prev;
+            }
+            return current;
+        }
+    }
+    
+};
 
 class Solution {
 public:
