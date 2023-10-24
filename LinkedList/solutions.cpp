@@ -509,6 +509,120 @@ public:
         
         return true;
     }
+
+    /**
+     * Merge Two Sorted Lists
+    */
+   ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if(list1 == NULL) {
+            return list2;
+        }
+        if(list2 == NULL) {
+            return list1;
+        }
+
+        ListNode* newHead;
+        if(list1->val < list2->val) {
+            newHead = list1;
+            list1 = list1->next;
+        } else {
+            newHead = list2;
+            list2 = list2->next;
+        }
+        ListNode* current = newHead;
+        
+        while(list1 != NULL && list2 != NULL) {
+            if(list1->val < list2->val) {
+                current->next = list1;
+                list1 = list1->next;
+            } else {
+                current->next = list2;
+                list2 = list2->next;
+            }
+            current = current->next;    
+        }
+        while(list1 != NULL) {
+            current->next = list1;
+            current = current->next;
+            list1 = list1->next;
+        }
+        while(list2 != NULL) {
+            current->next = list2;
+            current = current->next;
+            list2 = list2->next;
+        }
+        
+        
+        return newHead;
+    }
+
+    /**
+     * Add Two Numbers Linked List
+    */
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        // Catching the edge cases:
+        if(l1 == NULL) {
+            return l2;
+        }
+        if(l2 == NULL) {
+            return l1;
+        }
+        
+        ListNode* newHead = l1;
+        ListNode* newNode = l1;
+        ListNode* lastNode = l1;
+        int overflow = 0;
+        int sum;
+        
+        while(l1 != NULL && l2 != NULL) {
+            sum = l1->val + l2->val + overflow;
+            l1 = l1->next;
+            l2 = l2->next;
+            
+            if (sum > 9) {
+                sum = sum - 10;
+                overflow = 1;
+            } else {
+                overflow = 0;
+            }            
+            newNode->val = sum;
+            lastNode = newNode;
+            newNode = newNode->next;
+        }      
+        while(l1 != NULL) {
+            sum = l1->val + overflow;
+            l1 = l1->next;
+            if (sum > 9) {
+                sum = sum - 10;
+                overflow = 1;
+            } else {
+                overflow = 0;
+            }            
+            newNode->val = sum;
+            lastNode = newNode;
+            newNode = newNode->next;
+        }
+        while(l2 != NULL) {
+            sum = l2->val + overflow;
+            l2 = l2->next;
+            if (sum > 9) {
+                sum = sum - 10;
+                overflow = 1;
+            } else {
+                overflow = 0;
+            }            
+            newNode = new ListNode(sum);
+            lastNode->next = newNode;
+            lastNode = newNode;
+        }
+        if (overflow != 0) {
+            newNode = new ListNode(overflow);
+            lastNode->next = newNode;
+        }
+        return newHead;
+    }
+
+
 };
 
 
