@@ -131,7 +131,7 @@ public:
 };
 
 /**
- * Design a doubly linked list
+ * Design a Doubly Linked List
  */
 class MyDoublyLinkedList {
     
@@ -313,12 +313,11 @@ public:
         return entry;
     }
 
-
     /**
      * Intersection of Two Linked Lists
     */
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        
+        using namespace std;
         ListNode* currentA = headA;
         ListNode* currentB = headB;
         
@@ -367,6 +366,7 @@ public:
      * Remove Nth Node From End of List
     */
     ListNode* removeNthFromEnd(ListNode* head, int n) {
+        using namespace std;
         // Check for the edgecase of a list with size 1
         if (head->next == NULL) {
             delete head;
@@ -402,6 +402,7 @@ public:
      * Reverse Linked List
     */
     ListNode* reverseList(ListNode* head) {
+        using namespace std;
         ListNode* node = head;
         ListNode* temp;
         
@@ -421,7 +422,7 @@ public:
      * Remove Linked List Elements
     */
     ListNode* removeElements(ListNode* head, int val) {
-        
+        using namespace std;
         ListNode* deleted; 
         
         while(head != NULL && head->val == val) {
@@ -448,6 +449,7 @@ public:
      * Odd Even Linked List
     */
     ListNode* oddEvenList(ListNode* head) {
+        using namespace std;
         if (head == NULL) {
             return NULL;
         }
@@ -477,6 +479,7 @@ public:
      * Palindrome Linked List
     */
     bool isPalindrome(ListNode* head) {
+        using namespace std;
         if (head == NULL) {
             return true;            
         }
@@ -514,6 +517,7 @@ public:
      * Merge Two Sorted Lists
     */
    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        using namespace std;
         if(list1 == NULL) {
             return list2;
         }
@@ -560,6 +564,7 @@ public:
      * Add Two Numbers Linked List
     */
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        using namespace std;
         // Catching the edge cases:
         if(l1 == NULL) {
             return l2;
@@ -622,6 +627,114 @@ public:
         return newHead;
     }
 
+    /**
+     * Flatten a Multilevel Doubly Linked List
+    */
+    Node* flatten(Node* head) {
+        using namespace std;
+        Node* current = head;
+        
+        while(current != NULL) {
+            if(current->child != NULL) {
+                Node* nextNode = current->next;
+                Node* childFlat = flatten(current->child);
+                Node* lastChild = getLastElement(childFlat);
+                
+                childFlat->prev = current;
+                current->next = childFlat;
+                current->child = nullptr;
+                
+                if (nextNode != NULL) {
+                    lastChild->next = nextNode;
+                    nextNode->prev = lastChild;
+                }
+            }            
+            current = current ->next;
+        }
+        return head;
+    }
+    
+    Node* getLastElement(Node* head) {
+        using namespace std;
+        Node* current = head;
+        while(current->next != NULL) {
+            current = current->next;
+        }
+        return current;
+    }
+
+    /**
+     * Copy List with Random Pointer
+    */
+    Node* copyRandomList(Node* head) {
+        using namespace std;
+        if(head == NULL) {
+            return NULL;
+        }
+        
+        // Create a map of all of the nodes, mapping the original nodes to the copy nodes:
+        unordered_map<Node*, Node*> nodeMap;
+        Node* current = head;
+        while(current != NULL) {
+            nodeMap[current] = new Node(current->val);
+            current = current->next;
+        }
+        
+        // Now we can connect the copy nodes together using the map:
+        current = head;
+        while(current != NULL) {
+            Node* copy = nodeMap[current];
+            copy->next = nodeMap[current->next];
+            copy->random = nodeMap[current->random];
+            current = current->next;
+        }
+        Node* copyHead = nodeMap[head];
+        return copyHead;
+    }
+
+    /**
+     * Rotate List
+    */
+    ListNode* rotateRight(ListNode* head, int k) {
+        using namespace std;
+        if(head == NULL || head->next == NULL) {
+            return head;
+        }
+
+        // Calculate the size of the list:
+        ListNode* current = head;
+        int listSize = 0;
+        while (current != NULL) {
+            listSize++;
+            current = current->next;
+        }
+        // A listsize amount of rotations equal 0 rotations.
+        if(k == listSize) { 
+            return head;
+        }
+        if(k > listSize) {
+            k = k % listSize;
+        }
+        
+        // Find the k+1:th node from the back if possible, using slow-fast pointer technique:
+        ListNode* fast = head;
+        for(int i = 0; i < k; i++) {
+            fast = fast->next;
+        }
+        ListNode* beforeNewHead = head;        
+        while(fast->next != NULL) {
+            beforeNewHead = beforeNewHead->next;
+            fast = fast->next;
+        }
+        
+        // Make the list cyclic: 
+        fast->next = head;
+        
+        // Break the cycle in the correct spot, and assign a new head:
+        ListNode* newHead = beforeNewHead->next;
+        beforeNewHead->next = nullptr;
+        return newHead;        
+    }
 
 };
 
