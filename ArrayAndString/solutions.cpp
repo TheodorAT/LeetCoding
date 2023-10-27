@@ -169,4 +169,88 @@ public:
         return spiral;
     }
 
+    /**
+     * Pascal's Triangle
+    */
+   vector<vector<int>> generate(int numRows) {
+        using namespace std;
+        vector<vector<int>> pascals;
+        pascals.push_back({1});
+
+        vector<int> prevRow;
+        vector<int> nextRow;
+        
+        for(int i = 1;i < numRows; i++) {
+            nextRow = {1};
+            prevRow = pascals[i-1];
+            for(int j = 1; j < i; j++) {
+                int sum = prevRow[j-1] + prevRow[j];
+                nextRow.push_back(sum);
+            }
+            nextRow.push_back(1);
+            pascals.push_back(nextRow);
+        }
+        return pascals;
+    }
+
+    /**
+     * Add Binary
+    */
+    string addBinary(string a, string b) {
+        using namespace std;
+        string result = "";
+        int sum;
+        int overLoad = 0;
+        int indexA = a.size()-1;
+        int indexB = b.size()-1;
+        
+        while(indexA >= 0 || indexB >= 0) {
+            sum = overLoad;
+            if(indexA >= 0) {
+                sum += a[indexA] - '0';
+                indexA--;                
+            }
+            if(indexB >= 0) {
+                sum += b[indexB] - '0';
+                indexB--;                
+            }
+            if(sum > 1) {
+                sum = sum % 2;
+                overLoad = 1;
+            } else {
+                overLoad = 0;
+            }
+            result = to_string(sum) + result;
+        }
+        
+        if(overLoad != 0) {
+            result = "1" + result;
+        }
+        return result;
+    }
+
+    /**
+     * Implement strStr()
+    */
+    int strStr(string haystack, string needle) {
+        int haySize = haystack.size();
+        int needleSize = needle.size();
+        bool match = true;
+        
+        for(int i = 0; i <= haySize-needleSize; i++) {
+            match = true;
+            for(int j = 0; j < needleSize && match; j++) {
+                if(needle[j] != haystack[i+j]) {
+                    match = false;
+                }
+            }   
+            if(match) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+
 };
