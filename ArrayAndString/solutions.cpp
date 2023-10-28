@@ -233,6 +233,7 @@ public:
      * Implement strStr()
     */
     int strStr(string haystack, string needle) {
+        using namespace std;
         int haySize = haystack.size();
         int needleSize = needle.size();
         bool match = true;
@@ -251,6 +252,56 @@ public:
         return -1;
     }
 
+    /**
+     * Longest Common Prefix
+    */
+    string longestCommonPrefix(vector<string>& strs) {
+        using namespace std;
+        string prefix = "";
+        int index = 0;
+        bool search = true;
+        
+        while(index < strs[0].size() && search) {
+            char match = strs[0][index];
+            for(int i = 1; i < strs.size(); i++) {
+                if(index >= strs[i].size() || strs[i][index] != match) {
+                    search = false;
+                    break;
+                }
+            }
+            if(search) {
+                prefix = prefix + match;
+            }
+            index++;
+        }
+        return prefix;
+    }
 
+    /**
+     * Reverse String
+    */
+    void reverseString(vector<char>& s) {
+        using namespace std;
+        int i = 0;
+        int j = s.size()-1;
+        while(i < j) {
+            swap(s[i], s[j]);
+            i++;
+            j--;
+        }
+    }
+
+    /**
+     * Array Partition I
+    */
+    int arrayPairSum(vector<int>& nums) {
+        using namespace std;
+        sort(nums.begin(), nums.end());
+        int result = 0;
+        for(int i = 0; i < nums.size(); i += 2) {
+            result += nums[i];
+        }
+        return result;
+    }
 
 };
