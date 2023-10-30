@@ -304,4 +304,104 @@ public:
         return result;
     }
 
+    /**
+     * Two Sum II - Input array is sorted
+    */
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        using namespace std;
+        int index1 = 0;
+        int index2 = numbers.size() - 1;
+        int sum = target - 1;
+        vector<int> result;
+        
+        while(index1 < index2 && sum != target) {
+            sum = numbers[index1] + numbers[index2];
+            if(sum == target) {
+                result.push_back(index1 + 1);
+                result.push_back(index2 + 1);
+                return result;
+            } else if (sum < target) {
+                index1++;
+            } else {
+                index2--;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Remove Element
+    */
+    int removeElement(vector<int>& nums, int val) {
+        using namespace std;
+        int k = 0;
+        for(int i = 0; i < nums.size(); i++) {
+            if(nums[i] != val) {
+                nums[k] = nums[i];
+                k++;
+            }
+        }
+        return k;
+    }
+
+    /**
+     * Max Consecutive Ones
+    */
+    int findMaxConsecutiveOnes(vector<int>& nums) {
+        using namespace std;
+        int counter = 0;
+        int maxCount = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums[i] == 1) {
+                counter++;
+                if(counter > maxCount) {
+                    maxCount = counter;
+                }
+            } else {
+                counter = 0;
+            }
+        }
+        return maxCount; 
+    }
+
+    /**
+     * Minimum Size Subarray Sum
+    */
+    int minSubArrayLen(int target, vector<int>& nums) {
+        using namespace std;
+        int minLength = INT_MAX;
+        int fastIdx = 0;
+        int slowIdx = 0;
+        int sum = 0;
+        while(fastIdx < nums.size()) {
+            sum += nums[fastIdx];
+            fastIdx++;
+            while(sum >= target) {
+                minLength = min(minLength, fastIdx - slowIdx);
+                sum -= nums[slowIdx];
+                slowIdx++;
+            }
+        }
+        if(minLength == INT_MAX) {
+            return 0;
+        } else {
+            return minLength;        
+        }
+    }
+
+    /**
+     * Rotate Array
+    */
+    void rotate(vector<int>& nums, int k) {
+        using namespace std;
+        k = k % nums.size();
+        // Reverse the last k numbers: 
+        reverse(nums.end() - k, nums.end());
+        // Reversing the rest of the numbers: 
+        reverse(nums.begin(), nums.end() - k);
+        // Reversing the whole array: 
+        reverse(nums.begin(), nums.end());
+    }
+
+
 };
