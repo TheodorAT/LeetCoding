@@ -465,6 +465,4 @@ public:
         s.erase(s.end() - 1);
         return s;
     }
-
-
 };
