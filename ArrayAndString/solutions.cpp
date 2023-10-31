@@ -403,5 +403,68 @@ public:
         reverse(nums.begin(), nums.end());
     }
 
+    /**
+     * Pascal's Triangle II
+    */
+    vector<int> getRow(int rowIndex) {
+        using namespace std;
+        if(rowIndex == 0) {
+            return {1};
+        }
+        vector<int> row = {1};
+        vector<int> prevRow = {1};
+        int sum;
+        for(int i = 0; i <= rowIndex; i++) {
+            row = {1};
+            for(int j = 1; j < i; j++) {
+                sum = prevRow[j - 1] + prevRow[j];
+                row.push_back(sum);
+            }
+            row.push_back(1);
+            prevRow = row;
+        }
+        return row;
+    }
+
+    /**
+     * Reverse Words in a String
+    */
+    string reverseWords(string s) {
+        #include <regex>
+        using namespace std;
+        s.push_back(' ');
+        reverse(s.begin(), s.end());
+        s.push_back(' ');
+        int startWord = 0;
+        for(int i = 0; i < s.size(); i++) {
+            if(s[i] == ' ') {
+                reverse(s.begin() + startWord, s.begin() + i);
+                startWord = i + 1;
+            }
+        }
+        regex space_dupes("\\s+");
+        s = regex_replace(s, space_dupes, " ");
+        s.erase(s.end() - 1);
+        s.erase(s.begin());
+        return s;
+    }
+
+    /**
+     * Reverse Words in a String III
+    */
+    string reverseWords(string s) {
+        using namespace std;
+        s.push_back(' ');
+        int startWord = 0;
+        for(int i = 0; i < s.size(); i++) {
+            if(s[i] == ' ') {
+                reverse(s.begin() + startWord, s.begin() + i);
+                startWord = i + 1;
+            }
+        }
+        s.erase(s.end() - 1);
+        return s;
+    }
+
 
 };
