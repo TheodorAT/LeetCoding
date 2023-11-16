@@ -164,6 +164,49 @@ public:
         return results;
     }
 
+    /**
+     * Perfect Squares
+     * Given an integer n, return the least number of perfect square numbers that sum to n.
+    */
+    int numSquares(int n) {
+        using namespace std;
+        // Initializing the bfs:
+        unordered_set<int> visited;
+        queue<int> bfs;
+        int start = n;
+        bfs.push(n);
+        int counter = 0;
+        
+        // The breadth-first search:
+        while(!bfs.empty()) {
+            int iterSize = bfs.size();
+            for(int i = 0; i < iterSize; i++) {
+                int current = bfs.front(); bfs.pop();
+                vector<int> nextIntegers = nextInts(current);
+                for(int i: nextIntegers) {
+                    if(i == 0) {
+                        return counter + 1;
+                    }
+                    if (!visited.contains(i)) {
+                        bfs.push(i);
+                        visited.insert(i);
+                    }
+                }
+            }
+            counter++;
+        }
+        return counter;
+    }
     
+    vector<int> nextInts(int current) {
+        using namespace std;
+        vector<int> result; 
+        for(int i = 0; i*i <= current; i++) {
+            result.push_back(current - i*i);
+        }
+        return result;
+    }
+
+
 
 };
