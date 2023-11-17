@@ -61,6 +61,57 @@ public:
     }
 };
 
+
+/**
+ * Design Min-Stack
+*/
+class MinStack {
+    
+private: 
+    struct Node {
+        int val;
+        int min; 
+        Node* next;
+        
+        Node(int val, int min, Node* next) {
+            this->val = val;
+            this->min = min;
+            this->next = next;
+        }
+    };
+    
+    Node* head;
+    
+public:
+    MinStack() {
+        head = nullptr;
+    }
+    
+    void push(int val) {
+        if(head == NULL) {
+            head = new Node(val, val, nullptr);
+        } else {
+            head = new Node(val, min(val, head->min), head);
+        }
+    }
+    
+    void pop() {
+        Node* del = head;
+        head = head->next;
+        delete del;
+    }
+    
+    int top() {
+        return head->val;
+    }
+    
+    int getMin() {
+        return head->min;
+    }
+};
+
+
+
 class Solution { 
 public:
     /**
@@ -207,6 +258,45 @@ public:
         return result;
     }
 
+    /**
+     * Valid Parentheses
+    */
+    bool isValid(string s) {
+        using namespace std;
+        stack<char> parentheses;
+        map<char, char> pairs = {{')', '('}, {']', '['}, {'}', '{'}};
+        for(char c: s) {
+            if(!pairs.contains(c)) {
+                parentheses.push(c);  
+            } else if (!parentheses.empty() && pairs.find(c)->second == parentheses.top()) {    
+                parentheses.pop();
+            } else {
+                return false;
+            } 
+        }
+        return parentheses.empty();
+    }
 
+    /**
+     * Daily Temperatures
+    */
+   vector<int> dailyTemperatures(vector<int>& temperatures) {
+        using namespace std;
+        int size = temperatures.size();
+        vector<int> answer(size, 0);
+        
+        // Using a monotonic stack to remember the indexes of the days with highest temperatures, in an ascending order.
+        stack<int> indexStack;
+        for(int i = size - 1; i >= 0; i--) {
+            while(!indexStack.empty() && temperatures[indexStack.top()] <= temperatures[i]) {
+                indexStack.pop();
+            }
+            if(!indexStack.empty()) {
+                answer[i] = indexStack.top() - i;
+            }
+            indexStack.push(i);
+        }
+        return answer;
+    }
 
 };
