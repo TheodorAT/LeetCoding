@@ -110,7 +110,69 @@ public:
     }
 };
 
+/**
+ * Implement Queue using Stacks
+*/
+class MyQueue {
+private: 
+    stack<int> input;
+    stack<int> output;
+    
+public:  
+    void push(int x) {
+        input.push(x);
+    }
+    
+    int pop() {
+        int res = peek();
+        output.pop();
+        return res;
+    }
+    
+    int peek() {
+        if(output.empty()) {
+            while(!input.empty()) {
+                output.push(input.top());
+                input.pop();
+            }
+        }
+        return output.top();
+    }
+    
+    bool empty() {
+        return input.empty() && output.empty();
+    }
+};
 
+/**
+ * Implement Stack using Queues
+*/
+class MyStack {
+private: 
+    deque<int> queue;
+    
+public:
+    void push(int x) {
+        queue.push_back(x);
+        for(int i = 0; i < queue.size()-1; i++) {
+            queue.push_back(queue.front());
+            queue.pop_front();
+        }
+    }
+    
+    int pop() {
+        int res = queue.front(); queue.pop_front(); 
+        return res;
+    }
+    
+    int top() {
+        return queue.front();
+    }
+    
+    bool empty() {
+        return queue.empty();
+    }
+};
 
 class Solution { 
 public:
