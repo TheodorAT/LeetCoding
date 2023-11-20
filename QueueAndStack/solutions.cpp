@@ -280,7 +280,7 @@ public:
     /**
      * Daily Temperatures
     */
-   vector<int> dailyTemperatures(vector<int>& temperatures) {
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
         using namespace std;
         int size = temperatures.size();
         vector<int> answer(size, 0);
@@ -298,5 +298,38 @@ public:
         }
         return answer;
     }
+
+    /**
+     * Evaluate Reverse Polish Notation
+    */
+   int evalRPN(vector<string>& tokens) {
+        using namespace std;
+        stack<int> result;
+        int a;
+        int b;
+        for(int i = 0; i < tokens.size(); i++) {
+            if(tokens[i] == "+") {
+                a = result.top(); result.pop();
+                b = result.top(); result.pop();
+                result.push(b + a);
+            } else if(tokens[i] == "-") {
+                a = result.top(); result.pop();
+                b = result.top(); result.pop();
+                result.push(b - a);
+            } else if(tokens[i] == "*") {
+                a = result.top(); result.pop();
+                b = result.top(); result.pop();
+                result.push(b * a);
+            } else if(tokens[i] == "/") {
+                a = result.top(); result.pop();
+                b = result.top(); result.pop();
+                result.push(b / a);
+            } else {
+                result.push(stoi(tokens[i]));   
+            }
+        }
+        return result.top();
+    }
+
 
 };
