@@ -331,5 +331,92 @@ public:
         return result.top();
     }
 
+    /**
+     * Clone Graph
+    */
+    Node* cloneGraph(Node* node) {
+        using namespace std;
+        unordered_map<Node*, Node*> visited;
+        if(node == NULL) return NULL;
+        if(node->neighbors.size() == 0) return new Node(node->val);
+        return cloneNode(node, visited);
+    }
+    
+    Node* cloneNode(Node* node, unordered_map<Node*, Node*>& visited) {
+        Node* clone = new Node(node->val);
+        visited[node] = clone;
+        for(Node* neighbor: node->neighbors) {
+            if(visited.find(neighbor)==visited.end()) {
+                clone->neighbors.push_back(cloneNode(neighbor, visited));
+            } else {
+                clone->neighbors.push_back(visited[neighbor]);
+            }
+        }
+        return clone;
+    }
+
+    /**
+     * Target Sum
+    */
+    int findTargetSumWays(vector<int>& nums, int target) {
+        return targetSumWays(nums, target, 0);
+    }
+    
+    int targetSumWays(vector<int>& nums, int target, int curSum) {
+        using namespace std;
+        if(nums.empty()) {
+            if(curSum == target) {
+                return 1;
+            } 
+            return 0;
+        }
+        int i = nums.back(); nums.pop_back();
+        int counter = targetSumWays(nums, target, curSum - i) + targetSumWays(nums, target, curSum + i);
+        nums.push_back(i);        
+        return counter;
+    }
+
+    /**
+     * Binary Tree Inorder Traversal - Recursive solution.
+    */
+    vector<int> inorderTraversal(TreeNode* root) {
+        using namespace std;
+        vector<int> result;
+        inorderTraverse(root, result);
+        return result;
+    }
+    
+    void inorderTraverse(TreeNode* head, vector<int>& result) {
+        if(head != NULL) {
+            inorderTraverse(head->left, result);
+            result.push_back(head->val);
+            inorderTraverse(head->right, result);
+        }
+    }
+
+    /**
+     * Binary Tree Inorder Traversal - Iterative solution.
+    */
+    vector<int> inorderTraversal(TreeNode* root) {
+        using namespace std;
+        vector<int> result;
+        TreeNode* cur = root;
+        
+        stack<TreeNode*> dfs;
+        while(!dfs.empty() || cur != NULL) {
+            while(cur != NULL) {
+                dfs.push(cur);
+                cur = cur->left;
+            }
+            cur = dfs.top(); dfs.pop();
+            result.push_back(cur->val);
+            cur = cur->right;
+        }
+        return result;
+    }
+
+
+
+
 
 };
