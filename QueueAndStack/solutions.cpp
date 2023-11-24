@@ -477,6 +477,50 @@ public:
         return result;
     }
 
+    /**
+     * Decode string
+    */
+   string decodeString(string s) {
+        using namespace std;
+        stack<char> brackets;
+        string result = "";
+        for(int i = 0; i < s.size(); i++) {
+            if(isdigit(s[i])) {
+                // Find the repeat: 
+                string repeatString = "";
+                while(isdigit(s[i])) {
+                    repeatString += s[i];
+                    i++;
+                }
+                int repeat = stoi(repeatString);
+                // Find the argument: 
+                string argument = "";
+                brackets.push(s[i]); i++;
+                while(!brackets.empty()) {
+                    argument += s[i];
+                    i++;
+                    if(s[i] == ']') {
+                        brackets.pop();
+                    } 
+                    if(s[i] == '[') {
+                        brackets.push(s[i]);
+                    }
+                }
+                // Decoding the argument:
+                argument = decodeString(argument);
+                // Repeating the string:
+                string newRes = "";
+                for(int a = 0; a < repeat; a++) {
+                    newRes += argument;
+                }
+                result += newRes;
+            } else {
+                result += s[i];
+            }
+        }
+        return result;
+    }    
+
 
 
 
