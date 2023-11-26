@@ -521,7 +521,27 @@ public:
         return result;
     }    
 
-
+    /**
+     * Flood Fill
+    */
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        using namespace std;
+        floodFill(image, sr, sc, image[sr][sc], color);
+        return image;
+    }
+    
+    void floodFill(vector<vector<int>>& image, int sr, int sc, int startColor, int newColor) {         
+        if(sr < 0 || sc < 0 || sr >= image.size() || sc >= image[0].size() 
+           || image[sr][sc] == newColor || image[sr][sc] != startColor) {
+            return;
+        }
+        image[sr][sc] = newColor;
+        floodFill(image, sr + 1, sc, startColor, newColor);
+        floodFill(image, sr, sc + 1, startColor, newColor);
+        floodFill(image, sr - 1, sc, startColor, newColor);
+        floodFill(image, sr, sc - 1, startColor, newColor);
+        return;
+    }
 
 
 
